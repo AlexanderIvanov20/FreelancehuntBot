@@ -1,0 +1,35 @@
+{
+  "name": "freelancehuntbot",
+  "version": "1.0.0",
+  "description": "FreelancehuntBot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderIvanov20/FreelncehuntBot.git"
+  },
+  "keywords": [
+    "Node.JS",
+    "Typescript",
+    "Bot",
+    "Freelancehunt",
+    "FreelancehuntBot",
+    "TelegramBot"
+  ],
+  "author": "Alexander Ivanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderIvanov20/FreelncehuntBot/issues"
+  },
+  "homepage": "https://github.com/AlexanderIvanov20/FreelncehuntBot#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.2",
+    "@types/node-telegram-bot-api": "^0.40.3",
+    "typescript": "^3.8.3"
+  }
+}
