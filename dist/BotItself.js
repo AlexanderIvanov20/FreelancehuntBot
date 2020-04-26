@@ -5,17 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 const fs_1 = __importDefault(require("fs"));
-const FreelancehuntAPI_1 = require("./FreelancehuntAPI");
-const UserModel_1 = require("./UserModel");
-const bot = new node_telegram_bot_api_1.default(FreelancehuntAPI_1.token, { polling: true });
-const pathToSkils = __dirname + '\\skills.json';
+const path_1 = __importDefault(require("path"));
+const Freelancehunt_1 = require("./Freelancehunt");
+const pathToSkils = path_1.default.join(__dirname, '../', 'skills.json');
+const bot = new node_telegram_bot_api_1.default(Freelancehunt_1.token, { polling: true });
 let ids = [];
 let skills = JSON.parse(fs_1.default.readFileSync(pathToSkils, { encoding: 'utf8' }));
 let users = {};
+/**
+ * Configure inline options for select skills.
+ */
 function markupButtons(someButtons, msg) {
-    /*
-    Configure inline options for select skills.
-    */
     let inlineButtons = {
         reply_markup: JSON.stringify({
             inline_keyboard: someButtons
@@ -26,27 +26,20 @@ function markupButtons(someButtons, msg) {
     };
     return inlineButtons;
 }
+/**
+ * Deleting message.
+ */
 async function deleteNeededMessages(msg) {
-    /*
-    Deleting message.
-    */
     bot.deleteMessage(msg.chat.id, (msg.message_id - 1).toString());
     bot.deleteMessage(msg.chat.id, (msg.message_id - 2).toString());
 }
+/**
+ * On start event. Write to file id to further using for send new projects.
+ */
 bot.onText(/\/start/, function (msg, match) {
-    /*
-    On start event. Write to file id to further using for send new projects.
-    */
-    const user = new UserModel_1.User(new FreelancehuntAPI_1.Tracking(FreelancehuntAPI_1.token, bot, FreelancehuntAPI_1.telegramOptionsMessage), [], [], {});
-    users[msg.chat.id] = user;
+    // const observer = new Observer(msg.chat.id);
     for (let item in skills) {
         ids.push(+(skills[item]['id']));
-        users[msg.chat.id].buttons.push([
-            {
-                text: skills[item]['name'],
-                callback_data: skills[item]['id']
-            }
-        ]);
     }
     let message = `Hello, *${msg.chat.first_name} ${msg.chat.last_name}*.\n\n` +
         `Select skills! To choose your skills click a button.`;
@@ -60,15 +53,14 @@ bot.onText(/\/start/, function (msg, match) {
     };
     bot.sendMessage(msg.chat.id, message, chooseButton);
 });
+/**
+ * Check and react on skills id.
+ */
 bot.on('callback_query', (callbackQuery) => {
-    /*
-    Check and react on skills id.
-    */
     const action = callbackQuery.data;
     const msg = callbackQuery.message;
     if (action === 'chooseSkills') {
-        users[msg.chat.id].options = markupButtons(users[msg.chat.id].buttons, msg);
-        bot.editMessageText('Select skills: ', users[msg.chat.id].options);
+        // bot.editMessageText('Select skills: ', users[msg.chat.id].options);
     }
     else if (ids.includes(+action)) {
         users[msg.chat.id].skills.push(action);
@@ -88,8 +80,7 @@ bot.on('callback_query', (callbackQuery) => {
                     callback_data: 'stopSelecting'
                 }]);
         }
-        users[msg.chat.id].options = markupButtons(userButtons, msg);
-        bot.editMessageText('Select skills: ', users[msg.chat.id].options);
+        // bot.editMessageText('Select skills: ', users[msg.chat.id].options);
     }
     else if (action === 'stopSelecting') {
         bot.editMessageText(`For *start* getting new projects press on /trackProjects.`, {
@@ -99,27 +90,20 @@ bot.on('callback_query', (callbackQuery) => {
         });
     }
 });
+/**
+ * Start getting projects by function from another file.
+ */
 bot.onText(/\/trackProjects/, function (msg, match) {
-    /*
-    Start getting projects by function from another file.
-    */
     deleteNeededMessages(msg);
-    users[msg.chat.id].tracking.optionsRequest = {
-        'method': 'GET',
-        'url': FreelancehuntAPI_1.generateUrlWithSkills(users[msg.chat.id].skills),
-        'headers': {
-            'Authorization': 'Bearer 1db7b5f0e42435bac8272098372e80624e182141'
-        }
-    };
     users[msg.chat.id].tracking.getProjectsByMySkills(msg.chat.id);
     bot.sendMessage(msg.chat.id, 'Now you *track* projects.\n\nIf you want to stop tacking, press on /stopTrackProjects.' +
-        'If there are not new projects, the bot will not output anything', FreelancehuntAPI_1.telegramOptionsMessage);
+        'If there are not new projects, the bot will not output anything', Freelancehunt_1.optionsMessage);
 });
+/**
+ * Stop getting projects by function from another file.
+ */
 bot.onText(/\/stopTrackProjects/, function (msg, match) {
-    /*
-    Stop getting projects by function from another file.
-    */
     users[msg.chat.id].tracking.running = false;
-    bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', FreelancehuntAPI_1.telegramOptionsMessage);
+    bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', Freelancehunt_1.optionsMessage);
 });
 //# sourceMappingURL=BotItself.js.map
