@@ -63,7 +63,7 @@ class Tracking implements ITracking {
 export class Observer implements IObserver {
     private _userId!: number | string;
     private _projectsPath!: string;
-    public __isRunning: boolean = true;
+    // public __isRunning: boolean = true;
     public currentSkills!: string[];
     private dataFile!: any[];
     private projects!: any[];
@@ -75,10 +75,10 @@ export class Observer implements IObserver {
     /**
      * update. Get and send project. Also check on already notified.
      */
-    public update(track: Tracking) {
+    public async update(track: Tracking) {
         console.log(`Notify user: ${this._userId}...`)
 
-        const res = request('GET', generateUrlWithSkills(['56', '182', '24']), options);
+        const res = request('GET', generateUrlWithSkills(this.currentSkills), options);
         this.projects = JSON.parse(res.getBody('utf8')).data;
         this.dataFile = JSON.parse(fs.readFileSync(this._projectsPath, 'utf8').toString());
 
@@ -96,7 +96,7 @@ export class Observer implements IObserver {
         fs.writeFileSync(this._projectsPath, JSON.stringify(this.projects, null, 4));
 
         setTimeout(() => {
-            if (this.__isRunning) track.notify();
+            track.notify();
         }, 10000);
     }
 

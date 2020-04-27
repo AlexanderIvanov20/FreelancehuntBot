@@ -1,18 +1,16 @@
 export { };
 import { Tracking } from './FreelancehuntAPI';
+import { Observer } from './Freelancehunt';
+import { threadId } from 'worker_threads';
 
 
 export class User {
-    public tracking: Tracking;
-    public skills: string[];
-    public buttons: object[];
-    public options: object;
+    public observer!: Observer;
+    public skills!: string[];
+    public buttons!: object[];
+    public options!: object;
 
-
-    constructor(tracking: Tracking, skills: string[], buttons: any[], options: object) {
-        this.tracking = tracking;
-        this.skills = skills;
-        this.buttons = buttons;
-        this.options = options;
+    constructor(observer: Observer) {
+        this.observer = observer;
     }
 }

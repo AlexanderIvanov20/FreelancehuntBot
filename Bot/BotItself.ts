@@ -11,7 +11,6 @@ const bot = new TelegramBot(token, { polling: true });
 let ids: number[] = [];
 let skills: any[] = JSON.parse(fs.readFileSync(pathToSkils, { encoding: 'utf8' }));
 
-
 type ObjectUser = Record<string | number, User>;
 let users: ObjectUser = {};
 /**
@@ -25,6 +24,7 @@ function markupButtons(someButtons: any[], msg: any) {
         parse_mode: 'Markdown',
         chat_id: msg.chat.id,
         message_id: msg.message_id
+        
     };
     return inlineButtons;
 }
@@ -39,10 +39,20 @@ async function deleteNeededMessages(msg: Message): Promise<void> {
  * On start event. Write to file id to further using for send new projects.
  */
 bot.onText(/\/start/, function (msg: Message, match: RegExpExecArray | null) {
-    // const observer = new Observer(msg.chat.id);
+    const observer = new Observer(msg.chat.id);
+    const user = new User(observer);
+    user.buttons = [];
+    user.skills = [];
+    users[msg.chat.id] = user;
 
     for (let item in skills) {
         ids.push(+(skills[item]['id']));
+        users[msg.chat.id].buttons.push([
+            {
+                text: skills[item]['name'],
+                callback_data: skills[item]['id']
+            }
+        ]);
     }
 
     let message: string = `Hello, *${msg.chat.first_name} ${msg.chat.last_name}*.\n\n` +
@@ -65,7 +75,8 @@ bot.on('callback_query', (callbackQuery: CallbackQuery) => {
     const msg: any = callbackQuery.message;
 
     if (action === 'chooseSkills') {
-        // bot.editMessageText('Select skills: ', users[msg.chat.id].options);
+        users[msg.chat.id].options = markupButtons(users[msg.chat.id].buttons, msg);
+        bot.editMessageText('Select skills: ', users[msg.chat.id].options);
     }
     else if (ids.includes(+action)) {
         users[msg.chat.id].skills.push(action);
@@ -86,7 +97,8 @@ bot.on('callback_query', (callbackQuery: CallbackQuery) => {
                 callback_data: 'stopSelecting'
             }]);
         }
-        // bot.editMessageText('Select skills: ', users[msg.chat.id].options);
+        users[msg.chat.id].options = markupButtons(userButtons, msg);
+        bot.editMessageText('Select skills: ', users[msg.chat.id].options);
     }
     else if (action === 'stopSelecting') {
         bot.editMessageText(`For *start* getting new projects press on /trackProjects.`, {
@@ -101,14 +113,16 @@ bot.on('callback_query', (callbackQuery: CallbackQuery) => {
  */
 bot.onText(/\/trackProjects/, function (msg: Message, match: RegExpExecArray | null) {
     deleteNeededMessages(msg);
-    users[msg.chat.id].tracking.getProjectsByMySkills(msg.chat.id);
+    users[msg.chat.id].observer.currentSkills = users[msg.chat.id].skills;
+    track.attach(users[msg.chat.id].observer);
     bot.sendMessage(msg.chat.id, 'Now you *track* projects.\n\nIf you want to stop tacking, press on /stopTrackProjects.' +
         'If there are not new projects, the bot will not output anything', optionsMessage);
+    track.notify();
 });
 /**
  * Stop getting projects by function from another file.
  */
 bot.onText(/\/stopTrackProjects/, function (msg: Message, match: RegExpExecArray | null) {
-    users[msg.chat.id].tracking.running = false;
+    track.dettach(users[msg.chat.id].observer);
     bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', optionsMessage);
 });

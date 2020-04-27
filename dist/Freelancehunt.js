@@ -50,16 +50,15 @@ class Tracking {
 }
 class Observer {
     constructor(userId) {
-        this.__isRunning = true;
         this._userId = userId;
         this._projectsPath = path_1.default.join(__dirname, `${this._userId}_projects.json`);
     }
     /**
      * update. Get and send project. Also check on already notified.
      */
-    update(track) {
+    async update(track) {
         console.log(`Notify user: ${this._userId}...`);
-        const res = sync_request_1.default('GET', generateUrlWithSkills(['56', '182', '24']), options);
+        const res = sync_request_1.default('GET', generateUrlWithSkills(this.currentSkills), options);
         this.projects = JSON.parse(res.getBody('utf8')).data;
         this.dataFile = JSON.parse(fs_1.default.readFileSync(this._projectsPath, 'utf8').toString());
         if (!fs_1.default.existsSync(this._projectsPath)) {
@@ -75,8 +74,7 @@ class Observer {
         }
         fs_1.default.writeFileSync(this._projectsPath, JSON.stringify(this.projects, null, 4));
         setTimeout(() => {
-            if (this.__isRunning)
-                track.notify();
+            track.notify();
         }, 10000);
     }
     /**
