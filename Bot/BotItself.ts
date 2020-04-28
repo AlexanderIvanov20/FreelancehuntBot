@@ -1,24 +1,22 @@
 export { };
 import TelegramBot, { SendMessageOptions, Message, CallbackQuery } from 'node-telegram-bot-api';
 import fs from 'fs';
-import { Tracking, generateUrlWithSkills, token, telegramOptionsMessage } from './FreelancehuntAPI';
+import path from 'path';
 import { User } from './UserModel';
+import { track, Observer, generateUrlWithSkills, token, optionsMessage } from './Freelancehunt';
 
 
+const pathToSkils: string = path.join(__dirname, '../', 'skills.json');
 const bot = new TelegramBot(token, { polling: true });
-const pathToSkils: string = __dirname + '\\skills.json';
 let ids: number[] = [];
 let skills: any[] = JSON.parse(fs.readFileSync(pathToSkils, { encoding: 'utf8' }));
 
-
 type ObjectUser = Record<string | number, User>;
 let users: ObjectUser = {};
-
-
+/**
+ * Configure inline options for select skills.
+ */
 function markupButtons(someButtons: any[], msg: any) {
-    /*
-    Configure inline options for select skills.
-    */
     let inlineButtons: any = {
         reply_markup: JSON.stringify({
             inline_keyboard: someButtons
@@ -26,25 +24,25 @@ function markupButtons(someButtons: any[], msg: any) {
         parse_mode: 'Markdown',
         chat_id: msg.chat.id,
         message_id: msg.message_id
+        
     };
     return inlineButtons;
 }
-
-
+/**
+ * Deleting message.
+ */
 async function deleteNeededMessages(msg: Message): Promise<void> {
-    /*
-    Deleting message.
-    */
     bot.deleteMessage(msg.chat.id, (msg.message_id - 1).toString());
     bot.deleteMessage(msg.chat.id, (msg.message_id - 2).toString());
 }
-
-
+/**
+ * On start event. Write to file id to further using for send new projects.
+ */
 bot.onText(/\/start/, function (msg: Message, match: RegExpExecArray | null) {
-    /*
-    On start event. Write to file id to further using for send new projects.
-    */
-    const user: User = new User(new Tracking(token, bot, telegramOptionsMessage), [], [], {});
+    const observer = new Observer(msg.chat.id);
+    const user = new User(observer);
+    user.buttons = [];
+    user.skills = [];
     users[msg.chat.id] = user;
 
     for (let item in skills) {
@@ -69,12 +67,10 @@ bot.onText(/\/start/, function (msg: Message, match: RegExpExecArray | null) {
     };
     bot.sendMessage(msg.chat.id, message, chooseButton);
 });
-
-
+/**
+ * Check and react on skills id.
+ */
 bot.on('callback_query', (callbackQuery: CallbackQuery) => {
-    /*
-    Check and react on skills id.
-    */
     const action: any = callbackQuery.data;
     const msg: any = callbackQuery.message;
 
@@ -112,30 +108,21 @@ bot.on('callback_query', (callbackQuery: CallbackQuery) => {
         });
     }
 });
-
-
+/**
+ * Start getting projects by function from another file.
+ */
 bot.onText(/\/trackProjects/, function (msg: Message, match: RegExpExecArray | null) {
-    /*
-    Start getting projects by function from another file.
-    */
     deleteNeededMessages(msg);
-    users[msg.chat.id].tracking.optionsRequest = {
-        'method': 'GET',
-        'url': generateUrlWithSkills(users[msg.chat.id].skills),
-        'headers': {
-            'Authorization': 'Bearer 1db7b5f0e42435bac8272098372e80624e182141'
-        }
-    };
-    users[msg.chat.id].tracking.getProjectsByMySkills(msg.chat.id);
+    users[msg.chat.id].observer.currentSkills = users[msg.chat.id].skills;
+    track.attach(users[msg.chat.id].observer);
     bot.sendMessage(msg.chat.id, 'Now you *track* projects.\n\nIf you want to stop tacking, press on /stopTrackProjects.' +
-        'If there are not new projects, the bot will not output anything', telegramOptionsMessage);
+        'If there are not new projects, the bot will not output anything', optionsMessage);
+    track.notify();
 });
-
-
+/**
+ * Stop getting projects by function from another file.
+ */
 bot.onText(/\/stopTrackProjects/, function (msg: Message, match: RegExpExecArray | null) {
-    /*
-    Stop getting projects by function from another file.
-    */
-    users[msg.chat.id].tracking.running = false;
-    bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', telegramOptionsMessage);
+    track.dettach(users[msg.chat.id].observer);
+    bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', optionsMessage);
 });

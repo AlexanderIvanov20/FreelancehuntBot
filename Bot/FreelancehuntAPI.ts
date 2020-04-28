@@ -3,7 +3,6 @@ import request from 'request';
 import TelegramBot, { SendMessageOptions } from 'node-telegram-bot-api';
 import fs from 'fs';
 import path from 'path';
-import { threadId } from 'worker_threads';
 
 
 export const token: string = '931369266:AAFiXlP3Wvxp8tjMoRX78JJ8xG3k_WZJN84';
@@ -49,7 +48,7 @@ export class Tracking {
                         fs.writeFileSync(projectsPath, JSON.stringify(projects, null, 4));
 
                         for (let item in projects) {
-                            this.sendProject(projects, item, userId);
+                            sendProject(projects, item, userId);
                         }
                     }
 
@@ -57,7 +56,7 @@ export class Tracking {
                     let point: boolean = false;
                     for (let item in projects) {
                         if (!dataFile.some(obj => obj.id === projects[item].id)) {
-                            this.sendProject(projects, item, userId);
+                            sendProject(projects, item, userId);
                             point = true
                         }
                     }
@@ -98,17 +97,17 @@ export class Tracking {
         */
         console.error('Error:' + errorSome);
     }
+}
 
 
-    private async sendProject(projects: any[], item: any, userId: number | string): Promise<void> {
-        /*
-        Generate message and send it to current user by id
-        */
-        let messageHello: string = `Title: *${projects[item].attributes.name}*\n\n` +
-            `Description: ${projects[item].attributes.description}\n` +
-            `Link: ${projects[item].links.self.web}`;
-        bot.sendMessage(userId, messageHello, telegramOptionsMessage);
-    }
+export async function sendProject(projects: any[], item: any, userId: number | string): Promise<void> {
+    /*
+    Generate message and send it to current user by id
+    */
+    let messageHello: string = `Title: *${projects[item].attributes.name}*\n\n` +
+        `Description: ${projects[item].attributes.description}\n` +
+        `Link: ${projects[item].links.self.web}`;
+    bot.sendMessage(userId, messageHello, telegramOptionsMessage);
 }
 
 

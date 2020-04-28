@@ -38,14 +38,14 @@ class Tracking {
                     if (!fs_1.default.existsSync(projectsPath)) {
                         fs_1.default.writeFileSync(projectsPath, JSON.stringify(projects, null, 4));
                         for (let item in projects) {
-                            this.sendProject(projects, item, userId);
+                            sendProject(projects, item, userId);
                         }
                     }
                     let dataFile = JSON.parse(fs_1.default.readFileSync(projectsPath, 'utf8').toString());
                     let point = false;
                     for (let item in projects) {
                         if (!dataFile.some(obj => obj.id === projects[item].id)) {
-                            this.sendProject(projects, item, userId);
+                            sendProject(projects, item, userId);
                             point = true;
                         }
                     }
@@ -81,17 +81,18 @@ class Tracking {
         */
         console.error('Error:' + errorSome);
     }
-    async sendProject(projects, item, userId) {
-        /*
-        Generate message and send it to current user by id
-        */
-        let messageHello = `Title: *${projects[item].attributes.name}*\n\n` +
-            `Description: ${projects[item].attributes.description}\n` +
-            `Link: ${projects[item].links.self.web}`;
-        exports.bot.sendMessage(userId, messageHello, exports.telegramOptionsMessage);
-    }
 }
 exports.Tracking = Tracking;
+async function sendProject(projects, item, userId) {
+    /*
+    Generate message and send it to current user by id
+    */
+    let messageHello = `Title: *${projects[item].attributes.name}*\n\n` +
+        `Description: ${projects[item].attributes.description}\n` +
+        `Link: ${projects[item].links.self.web}`;
+    exports.bot.sendMessage(userId, messageHello, exports.telegramOptionsMessage);
+}
+exports.sendProject = sendProject;
 function generateUrlWithSkills(args) {
     /*
     Generate url for event user by his/ger skills.

@@ -1,11 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class User {
-    constructor(tracking, skills, buttons, options) {
-        this.tracking = tracking;
-        this.skills = skills;
-        this.buttons = buttons;
-        this.options = options;
+    constructor(observer) {
+        this.observer = observer;
     }
 }
 exports.User = User;

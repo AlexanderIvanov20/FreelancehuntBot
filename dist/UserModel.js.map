@@ -1,1 +1,1 @@
-{"version":3,"file":"UserModel.js","sourceRoot":"","sources":["../Bot/UserModel.ts"],"names":[],"mappings":";;AAIA,MAAa,IAAI;IAOb,YAAY,QAAkB,EAAE,MAAgB,EAAE,OAAc,EAAE,OAAe;QAC7E,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;QACzB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;QACvB,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IAC3B,CAAC;CACJ;AAbD,oBAaC"}
+{"version":3,"file":"UserModel.js","sourceRoot":"","sources":["../Bot/UserModel.ts"],"names":[],"mappings":";;AAMA,MAAa,IAAI;IAMb,YAAY,QAAkB;QAC1B,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;IAC7B,CAAC;CACJ;AATD,oBASC"}

@@ -1,0 +1,690 @@
+[
+    {
+        "id": 671589,
+        "type": "project",
+        "attributes": {
+            "name": "Telegram bot",
+            "description": "создать бота Для телеги, который будет выполнять действия по сбору определенной информации( зполнение полей) и переадресации собранного  в отдельный чат. схематичное описание бота в приложенном PDF",
+            "description_html": "<p>создать бота Для телеги, который будет выполнять действия по сбору определенной информации( зполнение полей) и переадресации собранного&nbsp; в отдельный чат. схематичное описание бота в приложенном PDF</p>",
+            "skills": [
+                {
+                    "id": 180,
+                    "name": "Разработка ботов"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": null,
+            "bid_count": 3,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 786949,
+                "type": "employer",
+                "login": "FalconProject",
+                "first_name": "Иван",
+                "last_name": "Б.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/FalconProject.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/FalconProject.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/786949"
+            },
+            "freelancer": null,
+            "tags": [
+                {
+                    "id": "486336",
+                    "name": "боты для Телеграм"
+                },
+                {
+                    "id": "701241",
+                    "name": "телеграм"
+                },
+                {
+                    "id": "1487025",
+                    "name": "телеграм бот"
+                },
+                {
+                    "id": "2275140",
+                    "name": "Создание чат-ботов в Телеграме"
+                }
+            ],
+            "updates": [],
+            "published_at": "2020-04-27T22:28:07+03:00",
+            "expired_at": "2020-05-01T22:28:06+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671589",
+                "web": "https://freelancehunt.com/project/telegram-bot/671589.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671589/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671589/bids"
+        }
+    },
+    {
+        "id": 671584,
+        "type": "project",
+        "attributes": {
+            "name": "Создать Игру",
+            "description": "Нужно будет.\nСоздать карточную игру по моему сюжету для андроид,  в игре более сто персонажей, которые имеют свои функции и особенности. Более подробную информацию мы предоставим вам по WhatsApp.",
+            "description_html": "<p>Нужно будет.</p><p>Создать карточную игру по моему сюжету для андроид, &nbsp;в игре более сто персонажей, которые имеют свои функции и особенности. Более подробную информацию мы предоставим вам по WhatsApp.&nbsp;</p>",
+            "skills": [
+                {
+                    "id": 13,
+                    "name": "Java"
+                },
+                {
+                    "id": 28,
+                    "name": "Javascript"
+                },
+                {
+                    "id": 88,
+                    "name": "Разработка игр"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 10000,
+                "currency": "RUB"
+            },
+            "bid_count": 4,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 825629,
+                "type": "employer",
+                "login": "Alexsandr_Uskov",
+                "first_name": "Александр",
+                "last_name": "У.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/Alexsandr_Uskov.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/Alexsandr_Uskov.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/825629"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T22:22:59+03:00",
+            "expired_at": "2020-05-04T22:22:59+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671584",
+                "web": "https://freelancehunt.com/project/sozdat-igru/671584.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671584/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671584/bids"
+        }
+    },
+    {
+        "id": 670579,
+        "type": "project",
+        "attributes": {
+            "name": "Сделать сайт на OpenCart, такой же как у нас Shopify, только на русско",
+            "description": "Сделать сайт на OpenCart, такой же как у нас Shopify, только на русском языке.\n\nwoodandhearts.com\n\nТовары мы сами добавим.\n\nПо сути такой же сайт, с описанием на русском, нашими фото, и только платежка будет ликпей, а не вейфорпей как на шопифай.\n\nЗадачи,\n1) найти похожую тему как у нас на шопифай, чтобы заглавная часть была видео.\n2) Сделать все те же самые вкладки, адреса, фак, описание на сайте на русском языке, кроме товаров, товары мы сами добавим.\n3) подключить платежку ликпей\n4) подключить наш домен.",
+            "description_html": "<p>Сделать сайт на OpenCart, такой же как у нас Shopify, только на русском языке.<br /><br />woodandhearts.com<br /><br />Товары мы сами добавим.<br /><br />По сути такой же сайт, с описанием на русском, нашими фото, и только платежка будет ликпей, а не вейфорпей как на шопифай.<br /><br />Задачи,<br />1) найти похожую тему как у нас на шопифай, чтобы заглавная часть была видео.<br />2) Сделать все те же самые вкладки, адреса, фак, описание на сайте на русском языке, кроме товаров, товары мы сами добавим.<br />3) подключить платежку ликпей<br />4) подключить наш домен.</p>",
+            "skills": [
+                {
+                    "id": 96,
+                    "name": "Создание сайта под ключ"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 3000,
+                "currency": "UAH"
+            },
+            "bid_count": 11,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 471958,
+                "type": "employer",
+                "login": "Densiko",
+                "first_name": "Denys",
+                "last_name": "S.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/Densiko.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/Densiko.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/471958"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T21:49:03+03:00",
+            "expired_at": "2020-04-30T21:47:45+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/670579",
+                "web": "https://freelancehunt.com/project/sdelat-sayt-na-opencart-takoy-zhe/670579.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/670579/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/670579/bids"
+        }
+    },
+    {
+        "id": 671560,
+        "type": "project",
+        "attributes": {
+            "name": "Локальный Web Server на Андроид.",
+            "description": "Задача следующая. Есть исходный код на html, js, javascript, это персональная система связи. По факту ресурс с возможностью общения через видео и текст. Нужно сделать приложение на андроид которое выступит в качестве транслирующего в сеть сервера. То есть, написать или сделать с исходников с гитхаба сервер, залить туда исходные файлы сервиса, скомпилировать это всё так, что-бы пользователь когда нажал кнопку запустить сервер - ресурс стал доступен для пользователя в локальной сети.\nМожно адаптировать готовые серверные решения. Бюджет обсуждается.",
+            "description_html": "<p>Задача следующая. Есть исходный код на html, js, javascript, это персональная система связи. По факту ресурс с возможностью общения через видео и текст. Нужно сделать приложение на андроид которое выступит в качестве транслирующего в сеть сервера. То есть, написать или сделать с исходников с гитхаба сервер, залить туда исходные файлы сервиса, скомпилировать это всё так, что-бы пользователь когда нажал кнопку запустить сервер - ресурс стал доступен для пользователя в локальной сети.</p><p>Можно адаптировать готовые серверные решения. Бюджет обсуждается.</p>",
+            "skills": [
+                {
+                    "id": 28,
+                    "name": "Javascript"
+                },
+                {
+                    "id": 174,
+                    "name": "Node.js"
+                },
+                {
+                    "id": 121,
+                    "name": "Разработка под Android"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 1000,
+                "currency": "UAH"
+            },
+            "bid_count": 0,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 282105,
+                "type": "employer",
+                "login": "Alex20172017",
+                "first_name": "Денис",
+                "last_name": "К.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/Alex20172017.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/Alex20172017.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/282105"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T21:35:43+03:00",
+            "expired_at": "2020-05-04T22:35:03+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671560",
+                "web": "https://freelancehunt.com/project/lokalnyiy-web-server-na-android/671560.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671560/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671560/bids"
+        }
+    },
+    {
+        "id": 671556,
+        "type": "project",
+        "attributes": {
+            "name": "Формуляр / анкета в google sheets",
+            "description": "нужно прописать формулы или лучше скрипт для формуляра. После выбора в формуляре опций мы должны получить текст. Текст должен учитывать мужской и женский род, склонения и количество субъектов.  Составление текучего текста в зависимости от выбора ответов в анкете. Выдающийся текст на 3ёх языках (польский, русский и украинский)  - так что три раза текст. \nЭта работа будет использоваться как тул перевода анкеты на 3 языка. Все опции уже прописаны, нужно только прописать скрипты для получения текстов.\n\n\nЯ сам буду пользоваться этим tool в google Drive. \n\n\nВажно удобство в использовании и уверенность что с обратной стороны будет выходить 3 адекватных текста и было окно добавлять в будущем новые языки. Создавать новую анкету и сохранять в нужной папке suite.\n\n\nПо ссылки таблица, в 1 вкладке в столбике А и B вводятся данные. Два Столбика, так как анкета может заполнятся на 2-ух человек. В столбике С наименования выбора на немецком языке. Столбики F, I, L переводы выбираемых опций которые нужно завязать в текст на отдельных закладках ru, Ukr, pl. Перевод будет 1) котироваться на сайт 2) распечатоваться в PDF \nссылка на google sheet: https://docs.google.com/spreadsheets/d/1D4VQd5BCUWakU0cLJMbWTLrt_dP6Mu7EmpD8TDnlITE/edit?usp=sharing",
+            "description_html": "<p>нужно прописать формулы или лучше скрипт для формуляра. После выбора в формуляре опций мы должны получить текст. Текст должен учитывать мужской и женский род, склонения и количество субъектов. &nbsp;Составление текучего текста в зависимости от выбора ответов в анкете. Выдающийся текст на 3ёх языках (польский, русский и украинский) &nbsp;- так что три раза текст.&nbsp;</p><p>Эта работа будет использоваться как тул перевода анкеты на 3 языка. Все опции уже прописаны, нужно только прописать скрипты для получения текстов.</p><p><br /></p><p>Я сам буду пользоваться этим tool в google Drive.&nbsp;</p><p><br /></p><p>Важно удобство в использовании и уверенность что с обратной стороны будет выходить 3 адекватных текста и было окно добавлять в будущем новые языки. Создавать новую анкету и сохранять в нужной папке suite.</p><p><br /></p><p>По ссылки таблица, в 1 вкладке в столбике А и B вводятся данные. Два Столбика, так как анкета может заполнятся на 2-ух человек. В столбике С наименования выбора на немецком языке. Столбики F, I, L переводы выбираемых опций которые нужно завязать в текст на отдельных закладках ru, Ukr, pl. Перевод будет 1) котироваться на сайт 2) распечатоваться в PDF&nbsp;</p><p>ссылка на google sheet: <a href=\"https://docs.google.com/spreadsheets/d/1D4VQd5BCUWakU0cLJMbWTLrt_dP6Mu7EmpD8TDnlITE/edit?usp=sharing\" rel=\"noopener noreferrer nofollow\" target=\"_blank\">https://docs.google.com/spreadsheets/d/1D4VQd5BCUWakU0cLJMbWTLrt_dP6Mu7EmpD8TDnlITE/edit?usp=sharing</a></p><p><br /></p><p><br /></p>",
+            "skills": [
+                {
+                    "id": 28,
+                    "name": "Javascript"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 1000,
+                "currency": "UAH"
+            },
+            "bid_count": 0,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 594111,
+                "type": "employer",
+                "login": "veprytskiy",
+                "first_name": "Alex",
+                "last_name": "V.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/veprytskiy.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/veprytskiy.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/594111"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T21:32:24+03:00",
+            "expired_at": "2020-05-04T21:32:24+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671556",
+                "web": "https://freelancehunt.com/project/formulyar-anketa-google-sheets/671556.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671556/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671556/bids"
+        }
+    },
+    {
+        "id": 671540,
+        "type": "project",
+        "attributes": {
+            "name": "Сайт под ключ, 1 экран. Креативный. Анимация.",
+            "description": "Всем привет,  нужен сайт с минималистичным и креативным дизайном, с анимацией или графикой. \n1 страница, 1 экран, с контактами, ссылками на соц сети и тд. С адаптивной версткой. \nМузыкальный проект. \n\n\nПросьба писать только креативным и неординарным дизайнером с опытом работы от 3-х лет.",
+            "description_html": "<p>Всем привет, &nbsp;нужен сайт с минималистичным и креативным дизайном, с анимацией или графикой.&nbsp;</p><p>1 страница, 1 экран, с контактами, ссылками на соц сети и тд. С адаптивной версткой.&nbsp;</p><p>Музыкальный проект.&nbsp;</p><p><br /></p><p>Просьба писать только креативным и неординарным дизайнером с опытом работы от 3-х лет.&nbsp;</p>",
+            "skills": [
+                {
+                    "id": 43,
+                    "name": "Дизайн сайтов"
+                },
+                {
+                    "id": 96,
+                    "name": "Создание сайта под ключ"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": null,
+            "bid_count": 18,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 734574,
+                "type": "employer",
+                "login": "Marat1990",
+                "first_name": "Марат",
+                "last_name": "Б.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/Marat1990.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/Marat1990.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/734574"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T21:19:02+03:00",
+            "expired_at": "2020-05-04T21:19:02+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671540",
+                "web": "https://freelancehunt.com/project/sayt-pod-klyuch-ekran-kreativnyiy/671540.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671540/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671540/bids"
+        }
+    },
+    {
+        "id": 671537,
+        "type": "project",
+        "attributes": {
+            "name": "Написать простой плагин для WP",
+            "description": "Плагин должен добавлять на странице редактирования записи (в админке) поле, куда можно вписать ключевые слова (функционал внесения аналогичен меткам / можно его продублировать).\n\nПроисходит проверка наличия ключа в записи:\nЕсли есть – светится зеленым.\nЕсли нету – светится красным.\n\nПо умолчанию ключи светятся лишь в блоке, где они были заданы (блок меток).\nПо дополнительной опции чекбокса - еще и в самой записи выделяются фоном.\n\nДоступ к редактированию поля должен регулироваться ролью, заданной в любом редакторе ролей.",
+            "description_html": "<p>Плагин должен добавлять на странице редактирования записи (в админке) поле, куда можно вписать ключевые слова (функционал внесения аналогичен меткам / можно его продублировать).<br /><br />Происходит проверка наличия ключа в записи:<br />Если есть &ndash; светится зеленым.<br />Если нету &ndash; светится красным.<br /><br />По умолчанию ключи светятся лишь в блоке, где они были заданы (блок меток).<br />По дополнительной опции чекбокса - еще и в самой записи выделяются фоном.<br /><br />Доступ к редактированию поля должен регулироваться ролью, заданной в любом редакторе ролей. </p>",
+            "skills": [
+                {
+                    "id": 28,
+                    "name": "Javascript"
+                },
+                {
+                    "id": 1,
+                    "name": "PHP"
+                },
+                {
+                    "id": 99,
+                    "name": "Веб-программирование"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 2000,
+                "currency": "RUB"
+            },
+            "bid_count": 4,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 231377,
+                "type": "employer",
+                "login": "oizby",
+                "first_name": "Олег",
+                "last_name": "F.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/oizby.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/oizby.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/231377"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T21:10:32+03:00",
+            "expired_at": "2020-04-30T21:10:32+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671537",
+                "web": "https://freelancehunt.com/project/napisat-prostoy-plagin-dlya/671537.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671537/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671537/bids"
+        }
+    },
+    {
+        "id": 671524,
+        "type": "project",
+        "attributes": {
+            "name": "Оптимизация пейджспид интернет магазина опенкарт 1.5.6",
+            "description": "Поставил вместо обычного хостинга впс хороший, но пейджспид категориии и карточки товара так и не поднялся https://stroymag.ua/. \nВизуально сайт стал быстрее работать. Но как же поднять пейджспид, особенно для мобильных?\nРаньше для этого сайта были хорошие показатели, но видимо они поменяли алгоритмы анализа, т.к. он сильно ухудшился.",
+            "description_html": "<p>Поставил вместо обычного хостинга впс хороший, но пейджспид категориии и карточки товара так и не поднялся https://stroymag.ua/.&nbsp;</p><p>Визуально сайт стал быстрее работать. Но как же поднять пейджспид, особенно для мобильных?</p><p>Раньше для этого сайта были хорошие показатели, но видимо они поменяли алгоритмы анализа, т.к. он сильно ухудшился.</p>",
+            "skills": [
+                {
+                    "id": 1,
+                    "name": "PHP"
+                },
+                {
+                    "id": 99,
+                    "name": "Веб-программирование"
+                },
+                {
+                    "id": 39,
+                    "name": "Администрирование систем"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": null,
+            "bid_count": 11,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 202111,
+                "type": "employer",
+                "login": "KOSdaBOSS",
+                "first_name": "Константин",
+                "last_name": "П.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/KOSdaBOSS.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/KOSdaBOSS.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/202111"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [
+                {
+                    "description": "Новый впс http://prntscr.com/s6x844",
+                    "description_html": "<p>Новый впс&nbsp;<a href=\"http://prntscr.com/s6x844\" rel=\"noopener noreferrer nofollow\" target=\"_blank\">http://prntscr.com/s6x844</a></p>",
+                    "published_at": "2020-04-27T20:55:00+03:00"
+                }
+            ],
+            "published_at": "2020-04-27T20:48:03+03:00",
+            "expired_at": "2020-05-04T20:48:03+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671524",
+                "web": "https://freelancehunt.com/project/optimizatsiya-peydzhspid-internet-magazina-openkart-1-5-6/671524.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671524/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671524/bids"
+        }
+    },
+    {
+        "id": 671508,
+        "type": "project",
+        "attributes": {
+            "name": "Исправить скрипт nodejs",
+            "description": "Добрый день! Есть скрипт парсера на nodejs, который парсит ссылки, пытаюсь запускать его циклически, но через несколько часов работы он выкидывает ошибки и обрывается. Все логи есть, хотел попросить исправить скрипт",
+            "description_html": "<p><span data-freelancehunt-selector=\"description\">Добрый день! Есть скрипт парсера на nodejs, который парсит ссылки, пытаюсь запускать его циклически, но через несколько часов работы он выкидывает ошибки и обрывается. Все логи есть, хотел попросить исправить скрипт</span> </p>",
+            "skills": [
+                {
+                    "id": 169,
+                    "name": "Парсинг данных"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 1600,
+                "currency": "RUB"
+            },
+            "bid_count": 1,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": "employer",
+            "is_personal": false,
+            "employer": {
+                "id": 756212,
+                "type": "employer",
+                "login": "MaximShirinov",
+                "first_name": "Maxim",
+                "last_name": "S.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/MaximShirinov.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/MaximShirinov.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/756212"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T20:35:34+03:00",
+            "expired_at": "2020-05-04T20:35:34+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671508",
+                "web": "https://freelancehunt.com/project/ispravit-skript-nodejs/671508.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671508/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671508/bids"
+        }
+    },
+    {
+        "id": 671490,
+        "type": "project",
+        "attributes": {
+            "name": "Необходимо создать очень креативный лендинг на tilda из 5-7 блоков",
+            "description": "Скидывайте свои работы. \nРаботы с очень классным индивидуальным дизайном\nСрок на верстку лендинга 3 дня.\nРабота с квизами.\nСо знанием графических программ\nС хорошим вкусом дизайна",
+            "description_html": "<p>Скидывайте свои работы.&nbsp;</p><p>Работы с очень классным индивидуальным дизайном</p><p>Срок на верстку лендинга 3 дня.</p><p>Работа с квизами.</p><p>Со знанием графических программ</p><p>С хорошим вкусом дизайна</p>",
+            "skills": [
+                {
+                    "id": 43,
+                    "name": "Дизайн сайтов"
+                },
+                {
+                    "id": 117,
+                    "name": "Дизайн упаковки"
+                },
+                {
+                    "id": 96,
+                    "name": "Создание сайта под ключ"
+                }
+            ],
+            "status": {
+                "id": 11,
+                "name": "Прием ставок"
+            },
+            "budget": {
+                "amount": 8000,
+                "currency": "RUB"
+            },
+            "bid_count": 17,
+            "is_remote_job": false,
+            "is_premium": false,
+            "is_only_for_plus": false,
+            "location": null,
+            "safe_type": null,
+            "is_personal": false,
+            "employer": {
+                "id": 146214,
+                "type": "employer",
+                "login": "uralexes",
+                "first_name": "Алексей",
+                "last_name": "А.",
+                "avatar": {
+                    "small": {
+                        "url": "https://content.freelancehunt.com/profile/photo/50/uralexes.png",
+                        "width": 50,
+                        "height": 50
+                    },
+                    "large": {
+                        "url": "https://content.freelancehunt.com/profile/photo/225/uralexes.png",
+                        "width": 255,
+                        "height": 255
+                    }
+                },
+                "self": "https://api.freelancehunt.com/v2/employers/146214"
+            },
+            "freelancer": null,
+            "tags": [],
+            "updates": [],
+            "published_at": "2020-04-27T20:08:54+03:00",
+            "expired_at": "2020-05-04T20:08:54+03:00"
+        },
+        "links": {
+            "self": {
+                "api": "https://api.freelancehunt.com/v2/projects/671490",
+                "web": "https://freelancehunt.com/project/neobhodimo-sozdat-ochen-kreativnyiy-lending-na/671490.html"
+            },
+            "comments": "https://api.freelancehunt.com/v2/projects/671490/comments",
+            "bids": "https://api.freelancehunt.com/v2/projects/671490/bids"
+        }
+    }
+]

@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/AlexanderIvanov20/FreelncehuntBot#readme",
   "dependencies": {
-    "node-telegram-bot-api": "^0.40.0"
+    "node-telegram-bot-api": "^0.40.0",
+    "sync-request": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
