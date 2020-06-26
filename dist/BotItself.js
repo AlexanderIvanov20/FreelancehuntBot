@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 const fs_1 = __importDefault(require("fs"));
+const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 const path_1 = __importDefault(require("path"));
-const UserModel_1 = require("./UserModel");
 const Freelancehunt_1 = require("./Freelancehunt");
+const UserModel_1 = require("./UserModel");
 const pathToSkils = path_1.default.join(__dirname, '../', 'skills.json');
 const bot = new node_telegram_bot_api_1.default(Freelancehunt_1.token, { polling: true });
 let ids = [];
@@ -37,7 +37,7 @@ async function deleteNeededMessages(msg) {
 /**
  * On start event. Write to file id to further using for send new projects.
  */
-bot.onText(/\/start/, function (msg, match) {
+bot.onText(/\/start/, function (msg) {
     const observer = new Freelancehunt_1.Observer(msg.chat.id);
     const user = new UserModel_1.User(observer);
     user.buttons = [];
@@ -106,7 +106,7 @@ bot.on('callback_query', (callbackQuery) => {
 /**
  * Start getting projects by function from another file.
  */
-bot.onText(/\/trackProjects/, function (msg, match) {
+bot.onText(/\/trackProjects/, function (msg) {
     deleteNeededMessages(msg);
     users[msg.chat.id].observer.currentSkills = users[msg.chat.id].skills;
     Freelancehunt_1.track.attach(users[msg.chat.id].observer);
@@ -117,7 +117,7 @@ bot.onText(/\/trackProjects/, function (msg, match) {
 /**
  * Stop getting projects by function from another file.
  */
-bot.onText(/\/stopTrackProjects/, function (msg, match) {
+bot.onText(/\/stopTrackProjects/, function (msg) {
     Freelancehunt_1.track.dettach(users[msg.chat.id].observer);
     bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', Freelancehunt_1.optionsMessage);
 });

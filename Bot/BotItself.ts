@@ -1,9 +1,9 @@
 export { };
-import TelegramBot, { SendMessageOptions, Message, CallbackQuery } from 'node-telegram-bot-api';
 import fs from 'fs';
+import TelegramBot, { CallbackQuery, Message } from 'node-telegram-bot-api';
 import path from 'path';
+import { Observer, optionsMessage, token, track } from './Freelancehunt';
 import { User } from './UserModel';
-import { track, Observer, generateUrlWithSkills, token, optionsMessage } from './Freelancehunt';
 
 
 const pathToSkils: string = path.join(__dirname, '../', 'skills.json');
@@ -24,7 +24,7 @@ function markupButtons(someButtons: any[], msg: any) {
         parse_mode: 'Markdown',
         chat_id: msg.chat.id,
         message_id: msg.message_id
-        
+
     };
     return inlineButtons;
 }
@@ -38,9 +38,10 @@ async function deleteNeededMessages(msg: Message): Promise<void> {
 /**
  * On start event. Write to file id to further using for send new projects.
  */
-bot.onText(/\/start/, function (msg: Message, match: RegExpExecArray | null) {
+bot.onText(/\/start/, function (msg: Message) {
     const observer = new Observer(msg.chat.id);
     const user = new User(observer);
+    
     user.buttons = [];
     user.skills = [];
     users[msg.chat.id] = user;
@@ -111,7 +112,7 @@ bot.on('callback_query', (callbackQuery: CallbackQuery) => {
 /**
  * Start getting projects by function from another file.
  */
-bot.onText(/\/trackProjects/, function (msg: Message, match: RegExpExecArray | null) {
+bot.onText(/\/trackProjects/, function (msg: Message) {
     deleteNeededMessages(msg);
     users[msg.chat.id].observer.currentSkills = users[msg.chat.id].skills;
     track.attach(users[msg.chat.id].observer);
@@ -122,7 +123,7 @@ bot.onText(/\/trackProjects/, function (msg: Message, match: RegExpExecArray | n
 /**
  * Stop getting projects by function from another file.
  */
-bot.onText(/\/stopTrackProjects/, function (msg: Message, match: RegExpExecArray | null) {
+bot.onText(/\/stopTrackProjects/, function (msg: Message) {
     track.dettach(users[msg.chat.id].observer);
     bot.sendMessage(msg.chat.id, 'Now you * don\'t track* projects.\n\nIf you want to start tacking, press on /trackProjects.', optionsMessage);
 });
