@@ -2,7 +2,7 @@
   "name": "freelancehuntbot",
   "version": "1.0.0",
   "description": "FreelancehuntBot",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -12,7 +12,6 @@
   },
   "keywords": [
     "Node.JS",
-    "Typescript",
     "Bot",
     "Freelancehunt",
     "FreelancehuntBot",
@@ -25,14 +24,15 @@
   },
   "homepage": "https://github.com/AlexanderIvanov20/FreelncehuntBot#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "express-generator": "^4.16.1",
-    "telegraf": "^3.38.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "express-generator": "^4.16.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^5.9.22",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "telegraf": "^3.38.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
