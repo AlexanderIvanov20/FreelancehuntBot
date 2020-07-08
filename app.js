@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var botFile = require('./bots/Bot');
 var mongoose = require('mongoose');
+var { PORT, DB_PASSWORD, DB_NAME } = require('./config/config');
 
 var app = express();
 
@@ -15,17 +16,17 @@ var app = express();
   try {
     await mongoose.connect(`mongodb+srv://alexander:mongodbpass10@cluster0.rkfw4.mongodb.net/projects`, {
       useNewUrlParser: true,
-      useFindAndModify: false
+      useFindAndModify: false,
+      useUnifiedTopology: true
     });
 
-    app.listen(3000, () => {
+    app.listen(PORT, () => {
       console.log("Server has been started...");
     })
   } catch (e) {
     console.log(e);
   }
 })();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
