@@ -1,22 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const indexRouter = require('./routes/index');
+const startBot = require('./bots/Bot');
+const FreelancehuntScraper = require('./middleware/FreelancehuntScraper');
+const mongoose = require('mongoose');
+const { DB_PASSWORD } = require('./config/config');
 
-var indexRouter = require('./routes/index');
-var startBot = require('./bots/Bot');
-var mongoose = require('mongoose');
-var { PORT, DB_PASSWORD, DB_NAME } = require('./config/config');
 
 var app = express();
 
 (async () => {
   try {
-    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/projects`, {
+    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/`, {
       useNewUrlParser: true,
       useFindAndModify: false,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useCreateIndex: true
     });
   } catch (e) { console.log(e) }
 })();
@@ -47,5 +49,11 @@ app.use(function (err, req, res, next) {
 
 // Start running bot script
 startBot();
+
+// Periodically get new projects and write it into database
+setInterval(() => {
+  FreelancehuntScraper.addProjects();
+}, 15000);
+
 
 module.exports = app;
