@@ -62,15 +62,15 @@ class FreelancehuntScraper {
 		if (point) {
 			const date = new Date();
 			console.log(
-				`New projects have already added in collection at ` + 
-				`${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+				`New projects have already added in collection at `
+				+ `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 			);
 		}
 	}
 
 	// Find and get all projects from database
 	async findAllProjects() {
-		var projects = [];
+		let projects = [];
 		const allProjects = await Project.find({}, { projectId: 1, _id: 0 });
 
 		// Get only project's ids
