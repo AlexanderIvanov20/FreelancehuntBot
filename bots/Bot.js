@@ -5,6 +5,7 @@ const User = require('../models/User');
 
 const bot = new Telegraf(BOT_TOKEN);
 
+/* Generating array of skills from file. */
 const generateSkillsList = () => {
   const buttons = [];
   const ids = [];
@@ -16,15 +17,17 @@ const generateSkillsList = () => {
   return [buttons, ids];
 };
 
+/* User temporary data */
 const users = {};
 
+/* Connect all bot functions */
 const startBot = async () => {
-  // Handle start command. Greeting user
+  /* Handle start command. Greeting user. */
   bot.start(async (ctx) => {
-    // Check on existing user. Add new if don't exist.
+    /* Check on existing user. Add new if don't exist. */
     const allUsers = await User.find({ userId: ctx.from.id });
     const buttons = generateSkillsList();
-    if (allUsers === []) {
+    if (allUsers.length === 0) {
       const user = new User({
         userId: ctx.from.id,
         username: ctx.from.username,
@@ -50,13 +53,13 @@ const startBot = async () => {
     );
   });
 
-  // Handle callback query. Reacting on ckilcked inline button
+  /* Handle callback query. Reacting on ckilcked inline button. */
   bot.on('callback_query', async (ctx) => {
     const buttons = generateSkillsList();
 
-    // Start selecting some skills
+    /* Start selecting some skills. */
     if (ctx.callbackQuery.data === 'selectSkills') {
-      // Cleaning up the chat
+      /* Cleaning up the chat. */
       ctx.deleteMessage(ctx.callbackQuery.message.message_id - 1);
 
       ctx.editMessageText(
@@ -66,48 +69,47 @@ const startBot = async () => {
           reply_markup: {
             inline_keyboard: users[`skills_${ctx.from.id}`],
           },
-        }
+        },
       );
     }
 
-    // Add new skill to user list
+    /* Add new skill to user list. */
     else if (buttons[1].includes(+ctx.callbackQuery.data)) {
-      let skills = Object.values(users[`skills_${ctx.from.id}`]);
-      for (let item = 0; item < skills.length; item++) {
+      /* Deleting selected skills. Add it in user array. */
+      const skills = Object.values(users[`skills_${ctx.from.id}`]);
+      for (let item = 0; item < skills.length; item += 1) {
         if (skills[item][0].callback_data === +ctx.callbackQuery.data) {
           users[`skills_${ctx.from.id}`].splice(item, 1);
         }
       }
-
       users[`selectedSkills_${ctx.from.id}`].push(+ctx.callbackQuery.data);
 
-      // Delete selected button from inline button
+      /* Delete selected button from inline button. */
       ctx.editMessageText(
         'Выберите категории, _на которых Вы специализируетесь_.\n\n'
         + 'Чтобы _закончить выбор_, нажмите /stop',
         {
           reply_markup: {
-            inline_keyboard: users[`skills_${ctx.from.id}`]
+            inline_keyboard: users[`skills_${ctx.from.id}`],
           },
-          parse_mode: 'Markdown'
-        }
+          parse_mode: 'Markdown',
+        },
       );
     }
   });
 
+  /* Write user skills to collection. */
   bot.command('stop', (ctx) => {
-    console.log(users[`selectedSkills_${ctx.from.id}`]);
-    const some = User.find({
-      userId: ctx.from.id
-    });
-    console.log(some);
-    User.updateOne({
-      userId: ctx.from.id
+    const result = User.updateOne({
+      userId: ctx.from.id,
     }, {
-      ids: users[`selectedSkills_${ctx.from.id}`]
+      ids: users[`selectedSkills_${ctx.from.id}`],
     });
+    console.log(result);
   });
 
+
+  /* Start launching bot */
   bot.launch();
 };
 
