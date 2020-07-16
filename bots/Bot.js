@@ -56,7 +56,6 @@ const startBot = async () => {
   /* Handle callback query. Reacting on ckilcked inline button. */
   bot.on('callback_query', async (ctx) => {
     const buttons = generateSkillsList();
-
     /* Start selecting some skills. */
     if (ctx.callbackQuery.data === 'selectSkills') {
       /* Cleaning up the chat. */
@@ -87,7 +86,7 @@ const startBot = async () => {
       /* Delete selected button from inline button. */
       ctx.editMessageText(
         'Выберите категории, _на которых Вы специализируетесь_.\n\n'
-        + 'Чтобы _закончить выбор_, нажмите /stop',
+        + 'Чтобы _закончить выбор_, нажмите /stopSelecting',
         {
           reply_markup: {
             inline_keyboard: users[`skills_${ctx.from.id}`],
@@ -99,15 +98,13 @@ const startBot = async () => {
   });
 
   /* Write user skills to collection. */
-  bot.command('stop', (ctx) => {
-    const result = User.updateOne({
-      userId: ctx.from.id,
-    }, {
-      ids: users[`selectedSkills_${ctx.from.id}`],
+  bot.command('stopSelecting', async (ctx) => {
+    /* Cleaning up the chat. */
+    ctx.deleteMessage(ctx.message.message_id - 1);
+    await User.updateOne({ userId: ctx.from.id }, {
+      ids: Array.from(users[`selectedSkills_${ctx.from.id}`])
     });
-    console.log(result);
   });
-
 
   /* Start launching bot */
   bot.launch();
