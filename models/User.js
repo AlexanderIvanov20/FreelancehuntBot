@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const { Schema, model } = require('mongoose');
 
 /* Describe user's schema of the collection */
