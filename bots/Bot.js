@@ -3,15 +3,34 @@
 const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
 const fs = require('fs');
-const { BOT_TOKEN } = require('../config/config');
+const mongoose = require('mongoose');
+const { BOT_TOKEN, DB_PASSWORD } = require('../config/config');
 const User = require('../models/User');
+
+/**
+ * ? Connect to database.
+ */
+(async () => {
+  try {
+    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/freelancehuntBot`, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+  } catch (e) { throw new Error(e); }
+})();
 
 const bot = new Telegraf(BOT_TOKEN);
 
-/* Include middlewares */
+/**
+ * ? Include middlewares.
+ */
 bot.use(session());
 
-/* Generating array of skills from file. */
+/**
+ * ? Generating array of skills from file.
+ */
 const generateSkillsList = () => {
   const buttons = [];
   const ids = [];
@@ -23,21 +42,23 @@ const generateSkillsList = () => {
   return [buttons, ids];
 };
 
-/* Handle start command. Greeting user. */
-bot.start(async (ctx) => {
+/**
+ * ? Handle start command. Greeting user.
+ */
+bot.start((ctx) => {
   const buttons = generateSkillsList();
-  /* Check on existing user. Add new if don't exist. */
-  const allUsers = await User.find({ userId: ctx.from.id });
-  if (allUsers.length === 0) {
-    const user = new User({
-      userId: ctx.from.id,
-      username: ctx.from.username,
-      first_name: ctx.from.first_name,
-      last_name: ctx.from.last_name,
-      skills: [],
-    });
-    user.save();
-  }
+  /** Check on existing user. Add new if don't exist. */
+  User.find({ userId: ctx.from.id }, (err, res) => {
+    if (res.length === 0) {
+      User.create({
+        userId: ctx.from.id,
+        username: ctx.from.username,
+        first_name: ctx.from.first_name,
+        last_name: ctx.from.last_name,
+        skills: [],
+      });
+    }
+  });
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
   ctx.reply(
@@ -54,12 +75,14 @@ bot.start(async (ctx) => {
   );
 });
 
-/* Handle callback query. Reacting on ckilcked inline button. */
-bot.on('callback_query', async (ctx) => {
+/**
+ * ? Handle callback query. Reacting on ckilcked inline button.
+ */
+bot.on('callback_query', (ctx) => {
   const buttons = generateSkillsList();
-  /* Start selecting some skills. */
+  /** Start selecting some skills. */
   if (ctx.callbackQuery.data === 'selectSkills') {
-    /* Cleaning up the chat. */
+    /** Cleaning up the chat. */
     ctx.deleteMessage(ctx.callbackQuery.message.message_id - 1);
 
     ctx.editMessageText(
@@ -72,7 +95,7 @@ bot.on('callback_query', async (ctx) => {
       },
     );
   } else if (buttons[1].includes(+ctx.callbackQuery.data)) {
-    /* Deleting selected skills. Add it in user array. */
+    /** Deleting selected skills. Add it in user array. */
     const skills = Object.values(ctx.session.skills);
     for (let item = 0; item < skills.length; item += 1) {
       if (skills[item][0].callback_data === +ctx.callbackQuery.data) {
@@ -80,7 +103,7 @@ bot.on('callback_query', async (ctx) => {
       }
     }
     ctx.session.selectedSkills.push(+ctx.callbackQuery.data);
-    /* Delete selected button from inline button. */
+    /** Delete selected button from inline button. */
     ctx.editMessageText(
       'Выберите категории, _на которых Вы специализируетесь_.\n\n'
       + 'Чтобы _закончить выбор_, нажмите /stopSelecting',
@@ -94,34 +117,40 @@ bot.on('callback_query', async (ctx) => {
   }
 });
 
-/* Write user skills to collection. */
-bot.command('stopSelecting', async (ctx) => {
-  /* Cleaning up the chat. */
-  // ctx.deleteMessage(ctx.message.message_id);
-  try {
-    await User.updateOne({ userId: ctx.from.id }, {
-      ids: ctx.session.selectedSkills,
-    });
-  } catch (e) {
-    console.error(e);
-  }
-  // ctx.editMessageText(
-  //   'Вы выбрали категории.\n\n'
-  //   + 'Для того, что бы начать отслеживать проекты нажмите кнопку ниже',
-  //   {
-  //     reply_markup: {
-  //       inline_keyboard: [
-  //         [{ text: 'Отслеживать проекты', callback_data: 'trackProjects' }],
-  //       ],
-  //     },
-  //   },
-  // );
+/**
+ * ? Write user skills to collection.
+ */
+bot.command('stopSelecting', (ctx) => {
+  /** Cleaning up the chat. */
+  ctx.deleteMessage(ctx.message.message_id);
+  ctx.deleteMessage(ctx.message.message_id - 1);
+  /** Update user's skills. */
+  User.updateOne({ userId: ctx.from.id }, {
+    ids: ctx.session.selectedSkills,
+  }, (err, res) => {
+    console.log(res);
+  });
+
+  ctx.reply(
+    'Вы выбрали категории!\n\n'
+    + 'Для того, что бы начать _отслеживать проекты_ нажмите *кнопку* ниже',
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: 'Отслеживать проекты', callback_data: 'trackProjects' }],
+        ],
+      },
+      parse_mode: 'Markdown',
+    },
+  );
 });
 
-/* Error hadling */
+/**
+ * ? Error hadling.
+ */
 bot.catch((err, ctx) => {
   console.log(`Ooops, encountered an error for ${ctx.updateType}`, err);
 });
 
-/* Start launching bot */
+/** Start launching bot. */
 bot.launch();
