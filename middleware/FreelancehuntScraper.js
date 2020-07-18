@@ -1,9 +1,26 @@
 /* eslint-disable no-console */
 const axios = require('axios').default;
+const mongoose = require('mongoose');
 const Project = require('../models/Project');
-const { ACCESS_KEY } = require('../config/config');
+const { ACCESS_KEY, DB_PASSWORD } = require('../config/config');
 
-/* Initalize config to make request on Freelancehunt API */
+/**
+ * ? Connect to database.
+ */
+(async () => {
+  try {
+    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/freelancehuntBot`, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+  } catch (e) { throw new Error(e); }
+})();
+
+/**
+ * ? Initalize config to make request on Freelancehunt API.
+ */
 const config = {
   method: 'get',
   url: 'https://api.freelancehunt.com/v2/projects',
@@ -13,9 +30,11 @@ const config = {
 };
 
 class FreelancehuntScraper {
-  /* Add new projects into database */
+  /**
+   * ? Add new projects into database.
+   */
   async addProjects() {
-    /* Make request and get data from API */
+    /** Make request and get data from API */
     const response = await axios(config);
     const json = await response.data.data;
     const data = Object.values(json);
@@ -27,7 +46,7 @@ class FreelancehuntScraper {
       const object = data[item];
 
       if (!createdProjects.includes(object.id)) {
-        /* Write amount and currency if it exist */
+        /** Write amount and currency if it exist */
         let amount = -1;
         let currency = '';
         const ids = [];
@@ -36,13 +55,13 @@ class FreelancehuntScraper {
           currency = object.attributes.budget.currency;
         }
 
-        /* Saperate ids by object */
+        /** Saperate ids by object */
         object.attributes.skills.forEach((element) => {
           ids.push(element.id);
         });
 
-        /* Create new Project's object */
-        const project = new Project({
+        /** Create new Project's object */
+        Project.create({
           projectId: object.id,
           name: object.attributes.name,
           description: object.attributes.description,
@@ -55,7 +74,6 @@ class FreelancehuntScraper {
           publish_date: object.attributes.published_at,
           skill_ids: ids,
         });
-        project.save();
 
         point = true;
       }
@@ -70,18 +88,27 @@ class FreelancehuntScraper {
     }
   }
 
-  /* Find and get all projects from database */
+  /**
+   * ? Find and get all projects from database.
+   */
   // eslint-disable-next-line class-methods-use-this
   async findAllProjects() {
     const projects = [];
     const allProjects = await Project.find({}, { projectId: 1, _id: 0 });
 
-    /* Get only project's ids */
+    /** Get only project's ids */
     allProjects.forEach((element) => {
       projects.push(element.projectId);
     });
     return projects;
   }
+}
+
+if (require.main === module) {
+  const scraper = new FreelancehuntScraper();
+  setInterval(() => {
+    scraper.addProjects();
+  }, 10000);
 }
 
 module.exports = new FreelancehuntScraper();
