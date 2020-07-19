@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 const axios = require('axios').default;
 const mongoose = require('mongoose');
-const Project = require('../models/Project');
-const { ACCESS_KEY, DB_PASSWORD } = require('../config/config');
+const Project = require('./models/Project');
+const { ACCESS_KEY, DB_PASSWORD } = require('./config/config');
 
 /**
  * ? Connect to database.

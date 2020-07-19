@@ -29,7 +29,7 @@ const bot = new Telegraf(BOT_TOKEN);
  * ? Include middlewares.
  */
 bot.use(session());
-bot.use(userCreateMiddleware());
+bot.use(userCreateMiddleware);
 
 /**
  * ? Generating array of skills from file.
