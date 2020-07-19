@@ -4,10 +4,18 @@ const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const { Console } = require('console');
 const { BOT_TOKEN, DB_PASSWORD } = require('../config/config');
 const User = require('../models/User');
 const { Tracker } = require('../tracker');
 const { userCreateMiddleware } = require('../middleware/userCreate');
+const scraper = require('../FreelancehuntScraper');
+
+const loggerOptions = {
+  stdout: fs.createWriteStream('./out.log'),
+  stderr: fs.createWriteStream('./err.log'),
+};
+const logger = new Console(loggerOptions);
 
 /**
  * ? Connect to database.
@@ -49,6 +57,7 @@ const generateSkillsList = () => {
  * ? Handle start command. Greeting user.
  */
 bot.start((ctx) => {
+  logger.log('');
   const buttons = generateSkillsList();
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
@@ -123,7 +132,6 @@ bot.command('stopSelecting', (ctx) => {
   User.updateOne({ userId: ctx.from.id }, {
     ids: ctx.session.selectedSkills,
   });
-
   ctx.reply(
     'Вы выбрали категории!\n\n'
     + 'Для того, что бы начать _отслеживать проекты_ нажмите *кнопку* ниже',
@@ -142,8 +150,13 @@ bot.command('stopSelecting', (ctx) => {
  * ? Error hadling.
  */
 bot.catch((err, ctx) => {
-  console.log(`Ooops, encountered an error for ${ctx.updateType}`, err);
+  logger.error(`Ooops, encountered an error for ${ctx.updateType}`, err);
 });
 
 /** Start launching bot. */
 bot.launch();
+
+/** Periodically get new projects. */
+setInterval(() => {
+  scraper.addProjects();
+}, 5000);

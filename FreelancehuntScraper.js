@@ -104,11 +104,11 @@ class FreelancehuntScraper {
   }
 }
 
-if (require.main === module) {
+/* if (require.main === module) {
   const scraper = new FreelancehuntScraper();
   setInterval(() => {
     scraper.addProjects();
   }, 10000);
-}
+} */
 
 module.exports = new FreelancehuntScraper();
