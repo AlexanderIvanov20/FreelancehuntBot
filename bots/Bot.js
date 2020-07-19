@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const { BOT_TOKEN, DB_PASSWORD } = require('../config/config');
 const User = require('../models/User');
+const { Tracker } = require('../tracker');
+const { userCreateMiddleware } = require('../middleware/userCreate');
 
 /**
  * ? Connect to database.
@@ -27,6 +29,7 @@ const bot = new Telegraf(BOT_TOKEN);
  * ? Include middlewares.
  */
 bot.use(session());
+bot.use(userCreateMiddleware());
 
 /**
  * ? Generating array of skills from file.
@@ -47,20 +50,9 @@ const generateSkillsList = () => {
  */
 bot.start((ctx) => {
   const buttons = generateSkillsList();
-  /** Check on existing user. Add new if don't exist. */
-  User.find({ userId: ctx.from.id }, (err, res) => {
-    if (res.length === 0) {
-      User.create({
-        userId: ctx.from.id,
-        username: ctx.from.username,
-        first_name: ctx.from.first_name,
-        last_name: ctx.from.last_name,
-        skills: [],
-      });
-    }
-  });
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
+  ctx.session.tracker = new Tracker(ctx);
   ctx.reply(
     `Здравствуйте, *${ctx.from.first_name} ${ctx.from.last_name}*!\n`
     + 'Вас приветствует _FreelancehuntBot_.\n\n'
@@ -114,6 +106,9 @@ bot.on('callback_query', (ctx) => {
         parse_mode: 'Markdown',
       },
     );
+  } else if (ctx.callbackQuery.data === 'trackProjects') {
+    ctx.session.tracker.ctx = ctx;
+    ctx.session.tracker.sendProject(ctx.session.selectedSkills);
   }
 });
 
@@ -127,8 +122,6 @@ bot.command('stopSelecting', (ctx) => {
   /** Update user's skills. */
   User.updateOne({ userId: ctx.from.id }, {
     ids: ctx.session.selectedSkills,
-  }, (err, res) => {
-    console.log(res);
   });
 
   ctx.reply(

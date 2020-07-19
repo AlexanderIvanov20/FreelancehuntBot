@@ -23,12 +23,28 @@ class Tracker {
     this.ctx = ctx;
   }
 
-  sendProject(userIds) {
+  async sendProject(userIds) {
     Project.find({}, (err, res) => {
-      
+      if (err) throw new Error(err);
+
+      for (let item = 0; item < res.length; item += 1) {
+        const ids = res[item].skill_ids;
+
+        ids.forEach((element) => {
+          if (userIds.includes(element)) {
+            this.ctx.reply(
+              'Хуёк',
+            );
+          }
+        });
+      }
     });
   }
 }
 
-const track = new Tracker('some');
-track.sendProject();
+module.exports = {
+  Tracker,
+};
+
+// const track = new Tracker('some');
+// track.sendProject([99]);
