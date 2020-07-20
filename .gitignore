@@ -1,7 +1,13 @@
 .vscode/
+
+# Node directories
 node_modules/
 /dist
 
+# Eslint
 *.eslintrc.js
 *.eslintrc.json
 *.eslintignore
+
+# Intermidiate files
+*.log

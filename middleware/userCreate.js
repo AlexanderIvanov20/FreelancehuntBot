@@ -1,7 +1,9 @@
 const User = require('../models/User');
 
+/**
+ * ? Check on existing user. Add new if don't exist.
+ */
 const userCreateMiddleware = async (ctx, next) => {
-  /** Check on existing user. Add new if don't exist. */
   User.find({ userId: ctx.from.id }, (err, res) => {
     if (res.length === 0) {
       User.create({

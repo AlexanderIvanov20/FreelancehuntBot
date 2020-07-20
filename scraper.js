@@ -1,22 +1,14 @@
 /* eslint-disable no-console */
 const axios = require('axios').default;
-const mongoose = require('mongoose');
 const Project = require('./models/Project');
-const { ACCESS_KEY, DB_PASSWORD } = require('./config/config');
+const { ACCESS_KEY } = require('./config/config');
+const { connectToDatabase } = require('./database');
+// const { logger } = require('./bots/Bot');
 
 /**
  * ? Connect to database.
  */
-(async () => {
-  try {
-    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/freelancehuntBot`, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-  } catch (e) { throw new Error(e); }
-})();
+connectToDatabase();
 
 /**
  * ? Initalize config to make request on Freelancehunt API.
@@ -104,11 +96,11 @@ class FreelancehuntScraper {
   }
 }
 
-/* if (require.main === module) {
+if (require.main === module) {
   const scraper = new FreelancehuntScraper();
   setInterval(() => {
     scraper.addProjects();
   }, 10000);
-} */
+}
 
 module.exports = new FreelancehuntScraper();

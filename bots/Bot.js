@@ -3,13 +3,13 @@
 const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
 const fs = require('fs');
-const mongoose = require('mongoose');
 const { Console } = require('console');
-const { BOT_TOKEN, DB_PASSWORD } = require('../config/config');
+const { BOT_TOKEN } = require('../config/config');
 const User = require('../models/User');
 const { Tracker } = require('../tracker');
 const { userCreateMiddleware } = require('../middleware/userCreate');
-const scraper = require('../FreelancehuntScraper');
+const scraper = require('../scraper');
+const { connectToDatabase } = require('../database');
 
 const loggerOptions = {
   stdout: fs.createWriteStream('./out.log'),
@@ -20,16 +20,7 @@ const logger = new Console(loggerOptions);
 /**
  * ? Connect to database.
  */
-(async () => {
-  try {
-    await mongoose.connect(`mongodb+srv://alexander:${DB_PASSWORD}@cluster0.rkfw4.mongodb.net/freelancehuntBot`, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-  } catch (e) { throw new Error(e); }
-})();
+connectToDatabase();
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -57,7 +48,7 @@ const generateSkillsList = () => {
  * ? Handle start command. Greeting user.
  */
 bot.start((ctx) => {
-  logger.log('');
+  logger.log('Start command. Create user session and add he/she in a database.');
   const buttons = generateSkillsList();
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
