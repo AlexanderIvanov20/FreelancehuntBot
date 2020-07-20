@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon bots/Bot.js",
     "lint": "eslint ./",
-    "start": "node bots/Bot.js"
+    "start": "node bots/Bot.js production"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/AlexanderIvanov20/FreelncehuntBot#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
     "mongoose": "^5.9.22",
     "morgan": "~1.9.1",
     "telegraf": "^3.38.0"

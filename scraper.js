@@ -1,9 +1,21 @@
 /* eslint-disable no-console */
 const axios = require('axios').default;
+const fs = require('fs');
 const Project = require('./models/Project');
 const { ACCESS_KEY } = require('./config/config');
 const { connectToDatabase } = require('./database');
-// const { logger } = require('./bots/Bot');
+
+/**
+ * ? Generating array of skills from file.
+ */
+const generateSkillsList = () => {
+  const ids = [];
+  const jsonedData = JSON.parse(fs.readFileSync('skills.json', 'utf8'));
+  jsonedData.forEach((element) => {
+    ids.push(element.id);
+  });
+  return ids.join();
+};
 
 /**
  * ? Connect to database.
@@ -11,11 +23,11 @@ const { connectToDatabase } = require('./database');
 connectToDatabase();
 
 /**
- * ? Initalize config to make request on Freelancehunt API.
+ * * Initalize config to make request on Freelancehunt API.
  */
 const config = {
   method: 'get',
-  url: 'https://api.freelancehunt.com/v2/projects',
+  url: `https://api.freelancehunt.com/v2/projects?filter[skill_id]=${generateSkillsList()}`,
   headers: {
     Authorization: `Bearer ${ACCESS_KEY}`,
   },
@@ -57,8 +69,10 @@ class FreelancehuntScraper {
           projectId: object.id,
           name: object.attributes.name,
           description: object.attributes.description,
-          amount,
-          currency,
+          // eslint-disable-next-line object-shorthand
+          amount: amount,
+          // eslint-disable-next-line object-shorthand
+          currency: currency,
           customer_first_name: object.attributes.employer.first_name,
           customer_last_name: object.attributes.employer.last_name,
           link: object.links.self.web,

@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 module.exports = {
   PORT: 3000,
-  DB_PASSWORD: 'mongodbpass10',
-  DB_NAME: 'FreelancehuntDB',
-  BOT_TOKEN: process.env.FREELANCEHUNT_TOKEN || '931369266:AAFiXlP3Wvxp8tjMoRX78JJ8xG3k_WZJN84',
-  ACCESS_KEY: '1db7b5f0e42435bac8272098372e80624e182141',
+  DB_PASSWORD: process.env.DB_PASSWORD,
+  DB_NAME: process.env.DB_NAME,
+  BOT_TOKEN: process.env.FreelancehuntBot,
+  ACCESS_KEY: process.env.FreelancehuntToken,
 };

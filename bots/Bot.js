@@ -1,28 +1,29 @@
 /* eslint-disable no-console */
 /* eslint-disable prefer-destructuring */
+const fs = require('fs');
 const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
-const fs = require('fs');
 const { Console } = require('console');
-const { BOT_TOKEN } = require('../config/config');
 const User = require('../models/User');
+const { connectToDatabase } = require('../database');
+const { BOT_TOKEN } = require('../config/config');
 const { Tracker } = require('../tracker');
 const { userCreateMiddleware } = require('../middleware/userCreate');
 const scraper = require('../scraper');
-const { connectToDatabase } = require('../database');
 
+/** Logging in files for production. */
 const loggerOptions = {
-  stdout: fs.createWriteStream('./out.log'),
-  stderr: fs.createWriteStream('./err.log'),
+  stdout: fs.createWriteStream('./var/out.log'),
+  stderr: fs.createWriteStream('./var/err.log'),
 };
 const logger = new Console(loggerOptions);
+
+const bot = new Telegraf(BOT_TOKEN);
 
 /**
  * ? Connect to database.
  */
 connectToDatabase();
-
-const bot = new Telegraf(BOT_TOKEN);
 
 /**
  * ? Include middlewares.
@@ -31,7 +32,7 @@ bot.use(session());
 bot.use(userCreateMiddleware);
 
 /**
- * ? Generating array of skills from file.
+ * * Generating array of skills from file.
  */
 const generateSkillsList = () => {
   const buttons = [];
@@ -45,14 +46,16 @@ const generateSkillsList = () => {
 };
 
 /**
- * ? Handle start command. Greeting user.
+ * * Handle start command. Greeting user.
  */
 bot.start((ctx) => {
   logger.log('Start command. Create user session and add he/she in a database.');
   const buttons = generateSkillsList();
+  /** Initialize default user fields in session. */
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
-  ctx.session.tracker = new Tracker(ctx);
+  ctx.session.tracker = new Tracker();
+  /** Greeting. */
   ctx.reply(
     `Здравствуйте, *${ctx.from.first_name} ${ctx.from.last_name}*!\n`
     + 'Вас приветствует _FreelancehuntBot_.\n\n'
@@ -68,14 +71,14 @@ bot.start((ctx) => {
 });
 
 /**
- * ? Handle callback query. Reacting on ckilcked inline button.
+ * * Handle callback query. Reacting on ckilcked inline button.
  */
 bot.on('callback_query', (ctx) => {
   const buttons = generateSkillsList();
   /** Start selecting some skills. */
   if (ctx.callbackQuery.data === 'selectSkills') {
     /** Cleaning up the chat. */
-    ctx.deleteMessage(ctx.callbackQuery.message.message_id - 1);
+    ctx.telegram.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id - 1);
 
     ctx.editMessageText(
       'Выберите категории, _на которых Вы специализируетесь_.',
@@ -107,18 +110,41 @@ bot.on('callback_query', (ctx) => {
       },
     );
   } else if (ctx.callbackQuery.data === 'trackProjects') {
-    ctx.session.tracker.ctx = ctx;
-    ctx.session.tracker.sendProject(ctx.session.selectedSkills);
+    /** Cleaning up the chat. */
+    ctx.telegram.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
+    /** Calling method (sendProjects) of Tracker class */
+    ctx.session.tracker.sendProject(ctx.session.selectedSkills)
+      .then((newProjects) => {
+        newProjects.forEach((element) => {
+          /** Transform getted data and send it to user. */
+          const realAmount = (element.amount !== -1) ? element.amount : 'Договорная';
+          ctx.reply(
+            `<b><a href="${element.link}">${element.name}</a></b>\n\n`
+            + `${element.description.trim()}\n\n`
+            + `Цена: <i>${realAmount} ${element.currency}</i>\n`
+            + `Заказчик: <a href="${element.customer_link}">${element.customer_first_name} `
+            + `${element.customer_last_name}</a>\n\n`
+            + `Дата публикации: ${element.publish_date}`,
+            {
+              parse_mode: 'HTML',
+              disable_web_page_preview: true,
+            },
+          );
+        });
+      })
+      .catch((err) => {
+        ctx.reply(err, { parse_mode: 'Markdown' });
+      });
   }
 });
 
 /**
- * ? Write user skills to collection.
+ * * Write user skills to collection.
  */
 bot.command('stopSelecting', (ctx) => {
   /** Cleaning up the chat. */
-  ctx.deleteMessage(ctx.message.message_id);
-  ctx.deleteMessage(ctx.message.message_id - 1);
+  ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
+  ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id - 1);
   /** Update user's skills. */
   User.updateOne({ userId: ctx.from.id }, {
     ids: ctx.session.selectedSkills,
@@ -137,17 +163,27 @@ bot.command('stopSelecting', (ctx) => {
   );
 });
 
+if (process.argv[process.argv.length] === 'production') {
 /**
- * ? Error hadling.
+ * ! Error hadling.
+ *
+ * @param {any} err If error exists, get it.
+ * @param {object} ctx Get context.
+ * @param {void} ctx Print message in console.
  */
-bot.catch((err, ctx) => {
-  logger.error(`Ooops, encountered an error for ${ctx.updateType}`, err);
-});
+  bot.catch((err, ctx) => {
+    logger.error(`Ooops, encountered an error for ${ctx.updateType}`, err);
+  });
+}
 
-/** Start launching bot. */
+/**
+ * * Start launching bot.
+ */
 bot.launch();
 
-/** Periodically get new projects. */
+/**
+ * ? Periodically get new projects.
+ */
 setInterval(() => {
   scraper.addProjects();
 }, 5000);
