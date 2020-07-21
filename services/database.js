@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { DB_PASSWORD } = require('./config/config');
+const { DB_PASSWORD } = require('../config/config');
 
 /**
  * ? Connect to database.

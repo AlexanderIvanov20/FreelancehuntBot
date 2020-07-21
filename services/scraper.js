@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 const axios = require('axios').default;
 const fs = require('fs');
-const Project = require('./models/Project');
-const { ACCESS_KEY } = require('./config/config');
+const Project = require('../models/Project');
+const { ACCESS_KEY } = require('../config/config');
 const { connectToDatabase } = require('./database');
 
 /**

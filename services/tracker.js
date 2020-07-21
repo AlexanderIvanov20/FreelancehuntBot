@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-const Project = require('./models/Project');
+const Project = require('../models/Project');
 const { connectToDatabase } = require('./database');
 
 /**

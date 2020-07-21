@@ -5,11 +5,11 @@ const { Telegraf } = require('telegraf');
 const session = require('telegraf/session');
 const { Console } = require('console');
 const User = require('../models/User');
-const { connectToDatabase } = require('../database');
+const { connectToDatabase } = require('../services/database');
 const { BOT_TOKEN } = require('../config/config');
-const { Tracker } = require('../tracker');
+const { Tracker } = require('../services/tracker');
 const { userCreateMiddleware } = require('../middleware/userCreate');
-const scraper = require('../scraper');
+const scraper = require('../services/scraper');
 
 /** Logging in files for production. */
 const loggerOptions = {
@@ -164,13 +164,13 @@ bot.command('stopSelecting', (ctx) => {
 });
 
 if (process.argv[process.argv.length] === 'production') {
-/**
- * ! Error hadling.
- *
- * @param {any} err If error exists, get it.
- * @param {object} ctx Get context.
- * @param {void} ctx Print message in console.
- */
+  /**
+   * ! Error hadling.
+   *
+   * @param {any} err If error exists, get it.
+   * @param {object} ctx Get context.
+   * @returns {void} Print message in console.
+   */
   bot.catch((err, ctx) => {
     logger.error(`Ooops, encountered an error for ${ctx.updateType}`, err);
   });
