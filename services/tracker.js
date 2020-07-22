@@ -39,12 +39,9 @@ class Tracker {
       }
     });
     /** Return promise for better async operations */
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (finalProjects.length !== 0) {
         resolve(finalProjects);
-      } else {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject('*К сожалению*, мы нашли проектов по _выбранным категориям_.');
       }
     });
   }

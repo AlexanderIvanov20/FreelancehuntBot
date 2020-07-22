@@ -34,7 +34,7 @@ bot.use(userCreateMiddleware);
 /**
  * * Generating array of skills from file.
  */
-const generateSkillsList = () => {
+function generateSkillsList() {
   const buttons = [];
   const ids = [];
   const jsonedData = JSON.parse(fs.readFileSync('skills.json', 'utf8'));
@@ -43,7 +43,30 @@ const generateSkillsList = () => {
     ids.push(element.id);
   });
   return [buttons, ids];
-};
+}
+
+/**
+ * * Get ids of skills and form string of it's names.
+ *
+ * @param {Array} someIds Number array of skills.
+ * @param {Array} userSkills User skills.
+ * @returns {String} Return string with names of skills.
+ */
+function getAndFormatNameOfSkillById(someIds, userSkills) {
+  const jsonedData = JSON.parse(fs.readFileSync('skills.json', 'utf8'));
+  const arrayJsonedData = Array.from(jsonedData);
+  let stringSkills = '';
+  arrayJsonedData.forEach((value) => {
+    if (someIds.includes(value.id)) {
+      if (userSkills.includes(value.id)) {
+        stringSkills += `<b>${value.name}</b>. `;
+      } else {
+        stringSkills += `${value.name}. `;
+      }
+    }
+  });
+  return stringSkills;
+}
 
 /**
  * * Handle start command. Greeting user.
@@ -55,6 +78,7 @@ bot.start((ctx) => {
   ctx.session.skills = buttons[0];
   ctx.session.selectedSkills = [];
   ctx.session.tracker = new Tracker();
+  ctx.session.showedProject = [];
   /** Greeting. */
   ctx.reply(
     `Здравствуйте, *${ctx.from.first_name} ${ctx.from.last_name}*!\n`
@@ -112,29 +136,41 @@ bot.on('callback_query', (ctx) => {
   } else if (ctx.callbackQuery.data === 'trackProjects') {
     /** Cleaning up the chat. */
     ctx.telegram.deleteMessage(ctx.chat.id, ctx.callbackQuery.message.message_id);
-    /** Calling method (sendProjects) of Tracker class */
-    ctx.session.tracker.sendProject(ctx.session.selectedSkills)
-      .then((newProjects) => {
-        newProjects.forEach((element) => {
-          /** Transform getted data and send it to user. */
-          const realAmount = (element.amount !== -1) ? element.amount : 'Договорная';
-          ctx.reply(
-            `<b><a href="${element.link}">${element.name}</a></b>\n\n`
-            + `${element.description.trim()}\n\n`
-            + `Цена: <i>${realAmount} ${element.currency}</i>\n`
-            + `Заказчик: <a href="${element.customer_link}">${element.customer_first_name} `
-            + `${element.customer_last_name}</a>\n\n`
-            + `Дата публикации: ${element.publish_date}`,
-            {
-              parse_mode: 'HTML',
-              disable_web_page_preview: true,
-            },
-          );
+    /** Tells user for waiting 3 seconds. */
+    ctx.answerCbQuery('Подождите 3 секунды пока мы ищем подходящие проекты...');
+
+    /** Periodically send new project. */
+    const intervalForSendingProjects = setInterval(() => {
+      /** Calling method (sendProjects) of Tracker class */
+      ctx.session.tracker.sendProject(ctx.session.selectedSkills)
+        .then((newProjects) => {
+          newProjects.forEach((element) => {
+            /** Check if project has ever been showed to user. */
+            if (!ctx.session.showedProject.includes(element.projectId)) {
+              ctx.session.showedProject.push(element.projectId);
+              /** Transform getted data and send it to user. */
+              const realAmount = (element.amount !== -1) ? element.amount : 'Договорная';
+              const namesOfSkills = getAndFormatNameOfSkillById(
+                element.skill_ids, ctx.session.selectedSkills,
+              );
+              ctx.reply(
+                `<b><a href="${element.link}">${element.name}</a></b>\n`
+                + `${namesOfSkills}\n\n`
+                + `${element.description.trim()}\n\n`
+                + `Цена: <i>${realAmount} ${element.currency}</i>\n`
+                + `Заказчик: <a href="${element.customer_link}">${element.customer_first_name} `
+                + `${element.customer_last_name}</a>\n\n`
+                + `Дата публикации: ${element.publish_date}`,
+                {
+                  parse_mode: 'HTML',
+                  disable_web_page_preview: true,
+                  disable_notification: true,
+                },
+              );
+            }
+          });
         });
-      })
-      .catch((err) => {
-        ctx.reply(err, { parse_mode: 'Markdown' });
-      });
+    }, 3000);
   }
 });
 
@@ -186,4 +222,4 @@ bot.launch();
  */
 setInterval(() => {
   scraper.addProjects();
-}, 5000);
+}, 1000);
