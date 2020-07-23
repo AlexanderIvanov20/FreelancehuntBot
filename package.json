@@ -29,12 +29,11 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "mongoose": "^5.9.22",
-    "morgan": "~1.9.1",
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.22.0",

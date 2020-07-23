@@ -213,11 +213,12 @@ bot.command('stopSelecting', (ctx) => {
  * * Get command and stop tracking projects in real-time.
  */
 bot.hears('Остановить трекинг', (ctx) => {
+  /** Cleaning up the chat. */
+  ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
   /** Clearing interval that tracking projects. */
   if (intervalForSendingProjects !== undefined) {
     clearInterval(intervalForSendingProjects);
   }
-
   ctx.reply(
     'Вы успешно _остановили отслеживание проектов_.\n\n'
     + 'Для повторного запуска отслеживания, нажмите кнопку ниже.',
