@@ -17,6 +17,7 @@ const loggerOptions = {
   stderr: fs.createWriteStream('./var/err.log'),
 };
 const logger = new Console(loggerOptions);
+let intervalForSendingProjects;
 
 const bot = new Telegraf(BOT_TOKEN);
 
@@ -140,7 +141,7 @@ bot.on('callback_query', (ctx) => {
     ctx.answerCbQuery('Подождите 3 секунды пока мы ищем подходящие проекты...');
 
     /** Periodically send new project. */
-    const intervalForSendingProjects = setInterval(() => {
+    intervalForSendingProjects = setInterval(() => {
       /** Calling method (sendProjects) of Tracker class */
       ctx.session.tracker.sendProject(ctx.session.selectedSkills)
         .then((newProjects) => {
@@ -153,10 +154,14 @@ bot.on('callback_query', (ctx) => {
               const namesOfSkills = getAndFormatNameOfSkillById(
                 element.skill_ids, ctx.session.selectedSkills,
               );
+              let description = element.description.trim();
+              if (description.length > 4090) {
+                description = description.slice(0, 4090);
+              }
               ctx.reply(
                 `<b><a href="${element.link}">${element.name}</a></b>\n`
                 + `${namesOfSkills}\n\n`
-                + `${element.description.trim()}\n\n`
+                + `${description}\n\n`
                 + `Цена: <i>${realAmount} ${element.currency}</i>\n`
                 + `Заказчик: <a href="${element.customer_link}">${element.customer_first_name} `
                 + `${element.customer_last_name}</a>\n\n`
@@ -165,12 +170,17 @@ bot.on('callback_query', (ctx) => {
                   parse_mode: 'HTML',
                   disable_web_page_preview: true,
                   disable_notification: true,
+                  reply_markup: {
+                    keyboard: [[{ text: 'Остановить трекинг' }]],
+                    resize_keyboard: true,
+                    one_time_keyboard: true,
+                  },
                 },
               );
             }
           });
         });
-    }, 3000);
+    }, 1500);
   }
 });
 
@@ -199,7 +209,30 @@ bot.command('stopSelecting', (ctx) => {
   );
 });
 
-if (process.argv[process.argv.length] === 'production') {
+/**
+ * * Get command and stop tracking projects in real-time.
+ */
+bot.hears('Остановить трекинг', (ctx) => {
+  /** Clearing interval that tracking projects. */
+  if (intervalForSendingProjects !== undefined) {
+    clearInterval(intervalForSendingProjects);
+  }
+
+  ctx.reply(
+    'Вы успешно _остановили отслеживание проектов_.\n\n'
+    + 'Для повторного запуска отслеживания, нажмите кнопку ниже.',
+    {
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: 'Отслеживать проекты', callback_data: 'trackProjects' }],
+        ],
+      },
+    },
+  );
+});
+
+if (process.argv[process.argv.length - 1] === 'production') {
   /**
    * ! Error hadling.
    *

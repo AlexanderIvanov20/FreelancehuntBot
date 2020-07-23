@@ -44,6 +44,7 @@ class FreelancehuntScraper {
     const data = Object.values(json);
 
     let point = false;
+    let count = 0;
     for (let item = 0; item < data.length; item += 1) {
       // eslint-disable-next-line no-await-in-loop
       const createdProjects = await this.findAllProjects();
@@ -82,6 +83,7 @@ class FreelancehuntScraper {
         });
 
         point = true;
+        count += 1;
       }
     }
 
@@ -89,8 +91,9 @@ class FreelancehuntScraper {
       const date = new Date();
       console.log(
         'New projects have already added in collection at '
-        + `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+        + `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} | Count: ${count}`,
       );
+      count = 0;
     }
   }
 

@@ -20,7 +20,7 @@ class Tracker {
   async sendProject(userIds) {
     const finalProjects = [];
     /** Get projects and sort it by date then they were published. */
-    await Project.find({}, null, { sort: { publish_date: 1 } }, (err, res1) => {
+    await Project.find({}, null, { sort: { publish_date: -1 }, limit: 10 }, (err, res1) => {
       if (err) throw new Error(err);
 
       const res = res1.reverse();
