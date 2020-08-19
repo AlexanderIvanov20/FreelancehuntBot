@@ -33,10 +33,6 @@
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
-    "eslint": "^7.5.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4"
   }
 }

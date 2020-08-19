@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
-const axios = require('axios').default;
-const fs = require('fs');
-const Project = require('../models/Project');
-const { ACCESS_KEY } = require('../config/config');
-const { connectToDatabase } = require('./database');
+const axios = require("axios").default;
+const fs = require("fs");
+const Project = require("../models/Project");
+const { ACCESS_KEY } = require("../config/config");
+const { connectToDatabase } = require("./database");
 
 /**
  * ? Generating array of skills from file.
  */
 const generateSkillsList = () => {
   const ids = [];
-  const jsonedData = JSON.parse(fs.readFileSync('skills.json', 'utf8'));
+  const jsonedData = JSON.parse(fs.readFileSync("skills.json", "utf8"));
   jsonedData.forEach((element) => {
     ids.push(element.id);
   });
@@ -26,7 +26,7 @@ connectToDatabase();
  * * Initalize config to make request on Freelancehunt API.
  */
 const config = {
-  method: 'get',
+  method: "get",
   url: `https://api.freelancehunt.com/v2/projects?filter[skill_id]=${generateSkillsList()}`,
   headers: {
     Authorization: `Bearer ${ACCESS_KEY}`,
@@ -53,7 +53,7 @@ class FreelancehuntScraper {
       if (!createdProjects.includes(object.id)) {
         /** Write amount and currency if it exist */
         let amount = -1;
-        let currency = '';
+        let currency = "";
         const ids = [];
         if (object.attributes.budget) {
           amount = object.attributes.budget.amount;
@@ -90,8 +90,8 @@ class FreelancehuntScraper {
     if (point) {
       const date = new Date();
       console.log(
-        'New projects have already added in collection at '
-        + `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} | Count: ${count}`,
+        "New projects have already added in collection at " +
+          `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} | Count: ${count}`
       );
       count = 0;
     }
