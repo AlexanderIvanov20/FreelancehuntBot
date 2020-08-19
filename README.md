@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/alexanderivanov20/freelancehuntbot/badge)](https://www.codefactor.io/repository/github/alexanderivanov20/freelancehuntbot)
+
 # FreelancehuntBot
 
 Bot on Node.js that give opportunity for tracking new projects on Freelancehunt
