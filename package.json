@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.9.22",
+    "mongoose": "^5.13.15",
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
